@@ -34,9 +34,15 @@ def create_book(new_book: newBook):
             "Author": new_book.Author
             }
     )
-    return {"success": True, "message": "Книга успешно добавлена" }
+    return {"success": True, "message": f"Книга успешно добавлена" }
 
-
+@app.delete("/books/{book_id}", tags=["Удаление книги"], summary="Удаление книги из списка")
+def delete_book(book_id: int):
+    for book in books:
+        if book["id"] == book_id:
+            books.remove(book)
+            return {"success": True, "message": f"Книга успешно удалена" }
+    raise HTTPException(status_code=404, detail="Книга не найдена")
 
 
 if __name__ == "__main__":
