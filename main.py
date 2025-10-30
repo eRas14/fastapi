@@ -34,6 +34,7 @@ def create_book(new_book: newBook):
             "Author": new_book.Author
             }
     )
+    return {"success": True, "message": "Книга успешно добавлена" }
 
 
 
