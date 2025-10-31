@@ -12,17 +12,23 @@
 
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from data import peoples
 import uvicorn
 
 app = FastAPI()
 
 
-@app.get("/", tags=["Задача 1"], summary="Создайте корневой эндпоинт GET /, который возвращает ")
-def get_message():
-    return {"message": "Hellow World!"}
+@app.get("/peoples", tags=["Задача 1.1"], summary="Вовзращает список людей")
+def get_peoples():
+    return peoples
 
-
+@app.get("/people{people_id}", tags=["Задача 1.2"], summary="Вовзращает человека по id")
+def get_people(people_id: int):
+    for people in peoples:
+        if people["id"] == people_id:
+            return people
+    raise HTTPException(status_code=404, detail="Не найдет человек с таким id")
 
 
 
