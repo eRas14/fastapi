@@ -18,9 +18,12 @@ import uvicorn
 app = FastAPI()
 
 
-@app.get("/task1", tags=["Задача 1"], summary="Описание задачи 1")
+@app.get("/", tags=["Задача 1"], summary="Создайте корневой эндпоинт GET /, который возвращает ")
 def get_message():
     return {"message": "Hellow World!"}
+
+
+
 
 
 if __name__ == "__main__":
