@@ -19,7 +19,12 @@ def get_student(student_id: int):
     raise HTTPException(status_code=404, detail="Студент с таким id не найден")
 
 #Добавление студента
+
 class StudentSchema(BaseModel):
+    """
+    Схема добавления студента
+    """
+
     name: str = Field(max_length=20, description="Имя студента, максимум 20 символов")
     surname: str = Field(max_length=20,description="Фамилия студента, максимум 20 символов")
     age: int = Field(ge=18, le=85, description="Возраст студента, от 18 до 85 лет")
@@ -37,6 +42,10 @@ def post_student(student: StudentSchema):
         "gender": student.gender
     })
     return {"success": True, "message": "Студент добавлен"}
+
+#Изменение данных студента по id
+@app.put("/student{student_id}")
+def put_student_id(student_id: int, student:StudentSchema):
 
 
 if __name__ == "__main__":
