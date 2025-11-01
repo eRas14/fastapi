@@ -11,21 +11,38 @@
 
 from fastapi import FastAPI
 import uvicorn
-from data import peoples
-from pydantic import BaseModel
+from data import items_for_sale
+from pydantic import BaseModel, Field
 
 app = FastAPI()
 
+data = {
+
+    "name": "1234567890123245",
+    "description": "LED лампа с регулируемой яркостью",
+    "price": 0,
+    "tax": 5
+
+}
 
 class ItemsSchema(BaseModel):
-    name: str
-    description: str | None
-    price: int
-    tax: float | None
+    name: str = Field(max_length=15)
+    description: str | None = Field(None, max_length=100)
+    price: float = Field(ge=0)
+    tax: float | None = Field(10.5)
 
-    
+items = []
 
-@app.get("/items", tags=["Задача 3.1"], summary="Создание Pydanic модели")
-class ItemSchema()
-def get_items(skip: int = 0, limit: int = 10):
-    return peoples[skip:skip + limit]
+@app.get("/items", tags=["Задача 3.1"], summary="Получение данных")
+def get_items():
+    return items
+
+
+@app.post("/items", tags=["Задача 3"], summary="Создание Pydanic модели")
+def post_items(item: ItemsSchema):
+    items.append(item)
+    return {"success": True, "message": "Данные добавлены", "Итоговая стоимость": f"{item.tax + item.price} рублей"}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", reload=True)
