@@ -9,7 +9,7 @@ app = FastAPI()
 def home_page():
     return {"message": "Привет, Хабр!"}
 
-@app.get('/students', tags=["Получение списка всех студентов"], summary="Получение всех студентов")
+@app.get('/api/v1/students', tags=["Получение списка всех студентов"])
 def get_students():
     return students_list
 
