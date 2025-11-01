@@ -11,7 +11,6 @@
 
 from fastapi import FastAPI
 import uvicorn
-from data import items_for_sale
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -25,6 +24,7 @@ data = {
 
 }
 
+#Валидация 
 class ItemsSchema(BaseModel):
     name: str = Field(max_length=15)
     description: str | None = Field(None, max_length=100)
