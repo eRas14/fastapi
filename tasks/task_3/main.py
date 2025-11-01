@@ -9,3 +9,23 @@
 
 """
 
+from fastapi import FastAPI
+import uvicorn
+from data import peoples
+from pydantic import BaseModel
+
+app = FastAPI()
+
+
+class ItemsSchema(BaseModel):
+    name: str
+    description: str | None
+    price: int
+    tax: float | None
+
+    
+
+@app.get("/items", tags=["Задача 3.1"], summary="Создание Pydanic модели")
+class ItemSchema()
+def get_items(skip: int = 0, limit: int = 10):
+    return peoples[skip:skip + limit]
