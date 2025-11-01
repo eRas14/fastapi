@@ -1,5 +1,6 @@
 from utils import students_list
 from fastapi import FastAPI, HTTPException
+from typing import Optional
 import uvicorn
 
 app = FastAPI()
@@ -20,17 +21,30 @@ def get_students():
 #             return student
 #     raise HTTPException(status_code=404, detail=f"Студент с id={stud_id} не найден")
     
-#Получение всех студентов с определенным курсом    
-@app.get('/students/{course_id}', tags=["Получение всех студетов с определенным курсом"], summary="Получение всех студетов с определенным курсом")
-def get_student(course_id: int):
-    courses_list = []
-    for student in students_list:
-        if student["course"] == course_id:
-            courses_list.append(student)    
-    if not courses_list:
-        raise HTTPException(status_code=404, detail=f"Такого курса не существует")
-    return courses_list
+# #Получение всех студентов с определенным курсом    
+# @app.get('/students/', tags=["Получение всех студетов с определенным курсом"], summary="Получение всех студетов с определенным курсом")
+# def get_student(course_id: int):
+#     courses_list = []
+#     for student in students_list:
+#         if student["course"] == course_id:
+#             courses_list.append(student)    
+#     if not courses_list:
+#         raise HTTPException(status_code=404, detail=f"Такого курса не существует")
+#     return courses_list
     
+
+@app.get('/students/', tags=["Получение всех студетов с определенным курсом или дефолт"], summary="Получение всех студетов с определенным курсом")
+def get_student(course: Optional[int] = None):
+    if course is None:
+        return students_list
+    else:
+        courses_list = []
+        for student in students_list:
+            if student["course"] == course:
+                courses_list.append(student)    
+        if not courses_list:
+            raise HTTPException(status_code=404, detail=f"Такого курса не существует")
+        return courses_list
     
 
 
